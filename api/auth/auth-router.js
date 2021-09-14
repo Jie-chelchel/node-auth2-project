@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const { checkUsernameExists, validateRoleName } = require("./auth-middleware");
-const { JWT_SECRET } = require("../secrets"); // use this secret!
 const bcrypt = require("bcryptjs");
 const Users = require("../users/users-model");
 const buildToken = require("./token-builder");

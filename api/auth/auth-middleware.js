@@ -18,7 +18,7 @@ const restricted = (req, res, next) => {
 
     Put the decoded token in the req object, to make life easier for middlewares downstream!
   */
-  const token = req.header.authorization;
+  const token = req.headers.authorization;
   if (!token) {
     return res.status(401).json({ message: "Token required" });
   }
@@ -42,7 +42,11 @@ const only = (role_name) => (req, res, next) => {
 
     Pull the decoded token from the req object, to avoid verifying it again!
   */
-  next();
+  if (role_name === req.decodedJwt.role_name) {
+    next();
+  } else {
+    res.status(403).json({ message: "This is not for you" });
+  }
 };
 
 const checkUsernameExists = async (req, res, next) => {
